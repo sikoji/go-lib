@@ -4,6 +4,13 @@ import (
 	redigo "github.com/garyburd/redigo/redis"
 )
 
+// Delete string value
+func (r Redis) Delete(key string) (string, error) {
+	conn := r.Pool.Get()
+	defer conn.Close()
+	return redigo.String(conn.Do("DEL", key))
+}
+
 // Get string value
 func (r Redis) Get(key string) (string, error) {
 	conn := r.Pool.Get()
